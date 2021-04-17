@@ -6,7 +6,7 @@ Simple plugin to display signs on folded lines.
 
 ## Preview
 
-<img src="https://raw.githubusercontent.com/lewis6991/media/main/foldsigns.gif"/>
+<img src="https://raw.githubusercontent.com/lewis6991/media/main/foldsigns.gif" width="600em" />
 
 
 ## Requirements
