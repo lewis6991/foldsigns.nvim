@@ -4,6 +4,11 @@
 
 Simple plugin to display signs on folded lines.
 
+## Preview
+
+<img src="https://raw.githubusercontent.com/lewis6991/media/main/foldsigns.gif"/>
+
+
 ## Requirements
 
 - Neovim >= 0.5.0
