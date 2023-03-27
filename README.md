@@ -8,22 +8,9 @@ Simple plugin to display signs on folded lines.
 
 <img src="https://raw.githubusercontent.com/lewis6991/media/main/foldsigns.gif" width="600em" />
 
-
 ## Requirements
 
-- Neovim >= 0.5.0
-
-## Installation
-
-[packer.nvim](https://github.com/wbthomason/packer.nvim):
-```lua
-use 'lewis6991/foldsigns.nvim'
-```
-
-[vim-plug](https://github.com/junegunn/vim-plug):
-```vim
-Plug 'lewis6991/foldsigns.nvim'
-```
+- Neovim >= 0.7.0
 
 ## Usage
 
