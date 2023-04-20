@@ -9,16 +9,21 @@ local ns = api.nvim_create_namespace('foldsigns')
 ---@field exclude string[]?
 local config = {}
 
+--- @param buf integer
+--- @param lnum? integer
 local function sign_get(buf, lnum)
   return fn.sign_getplaced(buf, { group = '*', lnum = lnum })[1].signs
 end
 
+--- @param buf integer
 local function on_win(_, _, buf, _, _)
+  api.nvim_buf_clear_namespace(buf, ns, 0, -1)
   if not sign_get(buf) then
     return false
   end
 end
 
+--- @param name string
 local function include(name)
   for _, p in ipairs(config.exclude or {}) do
     if name:match(p) then
@@ -36,9 +41,10 @@ local function include(name)
   return true
 end
 
+--- @param buf integer
+--- @param row integer
 local function on_line(_, _, buf, row)
   local lnum = row + 1
-  api.nvim_buf_clear_namespace(buf, ns, row, row + 1)
 
   -- If lnum is at the top of a folded region, see if there is a sign in the
   -- folded region. If there is place a fold sign on lnum.
