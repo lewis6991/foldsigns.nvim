@@ -4,9 +4,9 @@ local M = {}
 
 local ns = api.nvim_create_namespace('foldsigns')
 
----@class Foldsigns.Config
----@field include string[]?
----@field exclude string[]?
+--- @class Foldsigns.Config
+--- @field include string[]?
+--- @field exclude string[]?
 local config = {}
 
 --- @param buf integer
@@ -25,6 +25,11 @@ end
 
 --- @param name string
 local function include(name)
+  if name == '' then
+    -- signs with an empty name are from extmarks
+    return false
+  end
+
   for _, p in ipairs(config.exclude or {}) do
     if name:match(p) then
       return false
@@ -41,9 +46,18 @@ local function include(name)
   return true
 end
 
+--- @param win integer
+--- @param lnum integer
+--- @return integer
+local function foldclosedend(win, lnum)
+  return api.nvim_win_call(win, function()
+    return fn.foldclosedend(lnum)
+  end)
+end
+
 --- @param buf integer
 --- @param row integer
-local function on_line(_, _, buf, row)
+local function on_line(_, win, buf, row)
   local lnum = row + 1
 
   -- If lnum is at the top of a folded region, see if there is a sign in the
@@ -54,7 +68,7 @@ local function on_line(_, _, buf, row)
 
   local placed_names = {} ---@type table<string,integer>
 
-  for i = lnum + 1, fn.foldclosedend(lnum) do
+  for i = lnum + 1, foldclosedend(win, lnum) do
     for _, p in ipairs(sign_get(buf, i)) do
       if include(p.name) and not placed_names[p.name] then
         local sd = fn.sign_getdefined(p.name)[1]
